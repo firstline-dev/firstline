@@ -83,6 +83,7 @@ export function parseState(raw: string): FirstLineState | null {
       sessions: (obj['sessions'] as Session[]).map(normalizeSession),
       activeDays,
       freeGenerations: free,
+      unlockedAt: typeof obj['unlockedAt'] === "string" ? obj['unlockedAt'] : null,
     };
   } catch {
     return null;
