@@ -35,7 +35,9 @@ Single page, one route, all data in the browser. No accounts, no server, no trac
 - Footer: privacy line, the active shortcut, Export (JSON download) and Import (validated; bad file shows "Couldn't read that file. Make sure it's a FirstLine export." and never wipes existing data).
 
 ## Look and feel
-Deep blue-black background, soft off-white text, one teal accent. No red, no bright orange or yellow, no gradients, no pure white on pure black. JetBrains Mono for names, numbers, prompts, timestamps and the logo; Inter for labels and body. Max width 640px, centered, lots of空 space, one primary thing per screen.
+Exact color tokens from the brief, no approximations: base #0a0a0f, raised #14141b, hover #1c1c26, text #e4e4e7 / #a1a1aa / #52525b, accent #2dd4bf with hover #14b8a6 and dim rgba(45,212,191,0.1), success #4ade80, warning #a8a29e, border #27272a. No red, no bright orange or yellow, no gradients, no pure white on pure black. JetBrains Mono for names, numbers, prompts, timestamps and the logo; Inter for labels and body. Max width 640px, centered, generous white space, one primary thing per screen.
+
+Every quoted string from the brief is used character for character, and all UI copy is plain English only — no stray non-English characters anywhere.
 
 Logo: "FirstLine" wordmark where each "i" dot is a teal blinking cursor (1.2s pulse). Matching cursor favicon on a dark square. One animation only; sheet slides up in 200ms; toast fades over 1s; all motion off for users who ask for reduced motion.
 
