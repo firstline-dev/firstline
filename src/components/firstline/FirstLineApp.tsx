@@ -314,6 +314,9 @@ export function FirstLineApp() {
         )}
 
         <footer className="mt-14 flex flex-col gap-3 border-t border-[var(--border)] pt-6 text-[0.75rem] text-[var(--text-muted)]">
+          {hydrated && isUnlocked && (
+            <p className="text-[var(--accent)]">✓ Unlocked — lifetime access</p>
+          )}
           <p>No accounts. No servers. Your context never leaves this browser.</p>
           <p className="font-mono">Save shortcut: {shortcut} (press twice to quick-save)</p>
           <div className="flex items-center gap-4">
