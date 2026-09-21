@@ -12,14 +12,26 @@ export type FirstLineState = {
   sessions: Session[];
   activeDays: string[];
   freeGenerations: number;
+  unlockedAt: string | null;
 };
 
 export const STORAGE_KEY = "firstline_state";
+export const TOOL_KEY = "firstline_tool";
+
+export const USDT_ADDRESS = "TARyXjXJbqfPPypDcis7Hj5d1xhEjCprfS";
+export const SUPPORT_EMAIL = "firstline.dev.app@gmail.com";
+export const UNLOCK_KEY_PATTERN = /^FL-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
+export const UNLOCKED_GENERATIONS = 999999;
+
+export function isValidUnlockKey(key: string): boolean {
+  return UNLOCK_KEY_PATTERN.test(key.trim());
+}
 
 export const emptyState: FirstLineState = {
   sessions: [],
   activeDays: [],
   freeGenerations: 3,
+  unlockedAt: null,
 };
 
 export function todayKey(d = new Date()): string {
@@ -71,6 +83,7 @@ export function parseState(raw: string): FirstLineState | null {
       sessions: (obj['sessions'] as Session[]).map(normalizeSession),
       activeDays,
       freeGenerations: free,
+      unlockedAt: typeof obj['unlockedAt'] === "string" ? obj['unlockedAt'] : null,
     };
   } catch {
     return null;
@@ -125,4 +138,20 @@ export function formatTime(iso: string): string {
 
 export function newId(): string {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+export function loadTool(): ToolId {
+  if (typeof window === "undefined") return "claude";
+  const raw = window.localStorage.getItem(TOOL_KEY);
+  const found = TOOLS.find((t) => t.id === raw);
+  return found ? found.id : "claude";
+}
+
+export function saveTool(tool: ToolId) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(TOOL_KEY, tool);
+  } catch {
+    /* storage unavailable */
+  }
 }
