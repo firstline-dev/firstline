@@ -310,6 +310,8 @@ export function FirstLineApp() {
             onBack={() => setScreen("resume")}
             onCopy={copyPrompt}
             onRegenerate={() => generate(active)}
+            onRedeem={redeemKey}
+            onCopyAddress={copyAddress}
           />
         )}
 
