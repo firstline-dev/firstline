@@ -203,7 +203,7 @@ export function FirstLineApp() {
         <header className="mb-10 flex items-center justify-between">
           <Logo />
           <span className="font-mono text-[0.75rem] text-[var(--text-muted)]">
-            {hydrated ? `${state.freeGenerations} starts left` : ""}
+            {hydrated && !isUnlocked ? `${state.freeGenerations} starts left` : ""}
           </span>
         </header>
 
