@@ -139,3 +139,19 @@ export function formatTime(iso: string): string {
 export function newId(): string {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
+
+export function loadTool(): ToolId {
+  if (typeof window === "undefined") return "claude";
+  const raw = window.localStorage.getItem(TOOL_KEY);
+  const found = TOOLS.find((t) => t.id === raw);
+  return found ? found.id : "claude";
+}
+
+export function saveTool(tool: ToolId) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(TOOL_KEY, tool);
+  } catch {
+    /* storage unavailable */
+  }
+}
