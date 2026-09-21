@@ -7,10 +7,10 @@ import { defineConfig } from "vite";
 // Standalone static build of the FirstLine UI (no router, no server).
 // Used only to produce the drag-and-drop hostable folder deliverable.
 export default defineConfig({
-  root: "/tmp/static-app",
+  root: path.resolve("/dev-server/static-export"),
   base: "./",
   plugins: [react(), tailwind()],
   resolve: { alias: { "@": path.resolve("/dev-server/src") } },
-  server: { fs: { allow: ["/tmp/static-app", "/dev-server"] } },
+  
   build: { outDir: "/tmp/firstline-static", emptyOutDir: true },
 });
