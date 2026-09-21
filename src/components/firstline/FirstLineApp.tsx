@@ -478,19 +478,7 @@ function FirstLineScreen({
           <p className="text-[0.875rem] text-[var(--warning)]">
             You&apos;re out of free starts. Unlock below.
           </p>
-          <section className={cardClass}>
-            <p className="text-[0.875rem] leading-[1.7] text-[var(--text-primary)]">
-              You&apos;ve used your 3 free starts. Unlock unlimited first-line generation for $27
-              (one-time, USDT). No subscription. No account. Saving and viewing your contexts stays
-              free forever.
-            </p>
-            <a
-              href="#"
-              className="mt-4 inline-flex min-h-[44px] items-center rounded-md bg-[var(--accent)] px-4 text-[0.875rem] font-medium text-[#0a0a0f] transition-colors hover:bg-[var(--accent-hover)]"
-            >
-              Unlock
-            </a>
-          </section>
+          <UnlockCard onRedeem={onRedeem} onCopyAddress={onCopyAddress} />
         </>
       ) : (
         <button
@@ -501,5 +489,108 @@ function FirstLineScreen({
         </button>
       )}
     </main>
+  );
+}
+
+function UnlockCard({
+  onRedeem,
+  onCopyAddress,
+}: {
+  onRedeem: (key: string) => boolean;
+  onCopyAddress: () => void;
+}) {
+  const [key, setKey] = useState("");
+  const [error, setError] = useState(false);
+
+  return (
+    <section className={cardClass}>
+      <p className="text-[0.875rem] leading-[1.7] text-[var(--text-primary)]">
+        You&apos;ve used your 3 free starts. Unlock unlimited first-line generation for $27
+        (one-time, USDT). No subscription. No account. Saving and viewing your contexts stays free
+        forever.
+      </p>
+
+      <h3 className="mt-6 text-[1rem] text-[var(--text-primary)]">How to unlock</h3>
+
+      <ol className="mt-3 flex flex-col gap-5 text-[0.875rem] leading-[1.7]">
+        <li>
+          <p className="text-[var(--text-primary)]">
+            Step 1. Send exactly 27 USDT on the TRON network (TRC20) to:
+          </p>
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <code className="font-mono text-[0.75rem] break-all text-[var(--text-primary)]">
+              {USDT_ADDRESS}
+            </code>
+            <button
+              onClick={onCopyAddress}
+              className="min-h-[44px] rounded-md border border-[var(--border)] px-3 text-[0.75rem] text-[var(--text-primary)] hover:bg-[var(--bg-hover)]"
+            >
+              Copy address
+            </button>
+          </div>
+          <p className="mt-2 text-[0.75rem] text-[var(--warning)]">
+            TRON (TRC20) only — payments on other networks will be lost.
+          </p>
+        </li>
+        <li>
+          <p className="text-[var(--text-primary)]">
+            Step 2. Email the transaction ID (TXID) and the email where you want your unlock key to:{" "}
+            {SUPPORT_EMAIL}
+          </p>
+          <a href={`mailto:${SUPPORT_EMAIL}`} className={`${linkClass} mt-2 inline-block`}>
+            Email your TXID
+          </a>
+        </li>
+        <li className="text-[var(--text-primary)]">
+          Step 3. You&apos;ll receive your unlock key within 24 hours. Paste it below to unlock.
+        </li>
+      </ol>
+
+      <form
+        className="mt-6 flex flex-col gap-3"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const ok = onRedeem(key);
+          setError(!ok);
+        }}
+      >
+        <label className="text-[0.75rem] text-[var(--text-muted)]" htmlFor="fl-key">
+          Paste your unlock key
+        </label>
+        <input
+          id="fl-key"
+          value={key}
+          onChange={(e) => setKey(e.target.value.toUpperCase())}
+          className="min-h-[44px] w-full rounded-md border border-[var(--border)] bg-[var(--bg-base)] px-3 font-mono text-[0.875rem] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--accent)] focus:outline-none"
+          placeholder="FL-XXXX-XXXX-XXXX"
+        />
+        <button
+          type="submit"
+          className="min-h-[44px] self-start rounded-md bg-[var(--accent)] px-4 text-[0.875rem] font-medium text-[#0a0a0f] transition-colors hover:bg-[var(--accent-hover)]"
+        >
+          Unlock
+        </button>
+        {error && (
+          <p className="text-[0.875rem] text-[var(--warning)]">
+            That key doesn&apos;t look right. Check your email for the correct one.
+          </p>
+        )}
+      </form>
+
+      <div className="mt-5 flex flex-col gap-2 text-[0.75rem] leading-[1.7] text-[var(--text-muted)]">
+        <p>Keys are delivered by email within 24 hours of payment confirmation.</p>
+        <p>30-day refund — reply to your delivery email, no questions.</p>
+        <p>
+          Why USDT? I build from a country where Stripe doesn&apos;t operate. You pay once, you own
+          it — no subscription, no data broker.
+        </p>
+        <p>
+          Questions before paying?{" "}
+          <a href={`mailto:${SUPPORT_EMAIL}`} className={linkClass}>
+            Email {SUPPORT_EMAIL}
+          </a>
+        </p>
+      </div>
+    </section>
   );
 }
