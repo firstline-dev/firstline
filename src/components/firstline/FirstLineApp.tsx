@@ -397,6 +397,8 @@ function FirstLineScreen({
   onBack,
   onCopy,
   onRegenerate,
+  onRedeem,
+  onCopyAddress,
 }: {
   session: Session;
   isLocked: boolean;
@@ -405,6 +407,8 @@ function FirstLineScreen({
   onBack: () => void;
   onCopy: (text: string) => void;
   onRegenerate: () => void;
+  onRedeem: (key: string) => boolean;
+  onCopyAddress: () => void;
 }) {
   const teaser = firstSentence(session);
   const prompt = isLocked ? teaser : buildPrompt(session);
