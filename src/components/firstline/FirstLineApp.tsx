@@ -51,6 +51,7 @@ export function FirstLineApp() {
 
   useEffect(() => {
     setState(loadState());
+    setTool(loadTool());
     setIsMac(/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent));
   }, []);
 
@@ -339,7 +340,7 @@ export function FirstLineApp() {
             session={active}
             isLocked={isLocked}
             tool={tool}
-            onTool={setTool}
+            onTool={handleTool}
             onBack={() => setScreen("resume")}
             onCopy={copyPrompt}
             onRegenerate={() => generate(active)}
