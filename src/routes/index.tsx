@@ -12,11 +12,11 @@ export const Route = createFileRoute("/")({
           "Save what you were working on before you close the tab, then get one first line to restart. Built for developers with ADHD. No accounts, no servers.",
       },
       { name: "google", content: "notranslate" },
-      { property: "og:title", content: "FirstLine — save your context, resume with one line" },
+      { property: "og:title", content: "FirstLine — resume your code with one line" },
       {
         property: "og:description",
         content:
-          "Save what you were working on before you close the tab, then get one first line to restart. No accounts, no servers.",
+          "FirstLine is a free-tier, localStorage-only context-saver for developers with ADHD: it captures your context in 15 seconds before you leave, and hands you the first line to write when you return.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
