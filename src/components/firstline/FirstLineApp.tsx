@@ -196,6 +196,39 @@ export function FirstLineApp() {
 
   const shortcut = isMac ? "Cmd+Shift+S" : "Ctrl+Shift+S";
   const activeDays = state.activeDays.length;
+  const isUnlocked = Boolean(state.unlockedAt);
+
+  const redeemKey = useCallback(
+    (key: string) => {
+      if (!isValidUnlockKey(key)) return false;
+      update((s) => ({
+        ...s,
+        unlockedAt: new Date().toISOString(),
+        freeGenerations: UNLOCKED_GENERATIONS,
+      }));
+      return true;
+    },
+    [update],
+  );
+
+  const copyAddress = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(USDT_ADDRESS);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = USDT_ADDRESS;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+    }
+    showToast("Address copied.");
+  }, [showToast]);
+
+  const handleTool = useCallback((t: ToolId) => {
+    setTool(t);
+    saveTool(t);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[var(--bg-base)] pb-28">
